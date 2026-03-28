@@ -1,5 +1,7 @@
 package ds;
 
+import interfaces.DisjointSet;
+
 public class RankDSU implements DisjointSet {
     private int[] parent;
     private int[] rank;

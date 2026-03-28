@@ -1,5 +1,7 @@
 package ds;
 
+import interfaces.DisjointSet;
+
 public class TarjanDSU implements DisjointSet {
     private int[] parent;
     private int[] rank;

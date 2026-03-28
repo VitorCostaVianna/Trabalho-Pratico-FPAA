@@ -1,4 +1,4 @@
-package ds;
+package interfaces;
 
 public interface DisjointSet {
     int find(int i);

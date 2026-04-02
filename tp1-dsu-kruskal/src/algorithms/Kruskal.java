@@ -18,8 +18,7 @@ public class Kruskal<T,K> implements Algorithms {
                         int firstNode = edge.getSource().getId();
                         int secondNode = edge.getDestination().getId();
 
-                        if(ds.find(firstNode) != ds.find(secondNode)) {
-                                ds.union(firstNode, secondNode);
+                        if(ds.union(firstNode, secondNode)) {
                                 mst.add(edge);
                         }
 

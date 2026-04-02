@@ -1,21 +1,21 @@
 package model;
 
 public class BenchmarkResultModel {
-    private int memoryAccesses;
-    private double executionTime;
+    private long memoryAccesses;
+    private long executionTime;
     private double graphDensity;
 
-    public BenchmarkResultModel(DsTypeEnum type, int memoryAccesses, double executionTime, double graphDensity) {
+    public BenchmarkResultModel(long memoryAccesses, long executionTime, double graphDensity) {
         this.memoryAccesses = memoryAccesses;
         this.executionTime = executionTime;
         this.graphDensity = graphDensity;
     }
 
-    public int getMemoryAccesses() {
+    public long getMemoryAccesses() {
         return this.memoryAccesses;
     }
 
-    public double getExecutionTime() {
+    public long getExecutionTime() {
         return this.executionTime;
     }
 

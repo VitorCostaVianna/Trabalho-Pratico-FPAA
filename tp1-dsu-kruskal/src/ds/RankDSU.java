@@ -7,11 +7,11 @@ public class RankDSU implements DisjointSet {
     private int[] rank;
     private long memoryAccesses;
 
-    public RankDSU(int n) {
-        parent = new int[n];
-        rank = new int[n];
+    public RankDSU(int numNodes) {
+        parent = new int[numNodes];
+        rank = new int[numNodes];
         memoryAccesses = 0;
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < numNodes; i++) {
             parent[i] = i;
             rank[i] = 0; 
         }
@@ -28,7 +28,7 @@ public class RankDSU implements DisjointSet {
     }
 
     @Override
-    public void union(int i, int j) {
+    public boolean union(int i, int j) {
         int rootI = find(i);
         int rootJ = find(j);
 
@@ -47,7 +47,9 @@ public class RankDSU implements DisjointSet {
                     memoryAccesses += 2;
                 }
             }
+            return true;
         }
+        return false;
     }
 
     @Override

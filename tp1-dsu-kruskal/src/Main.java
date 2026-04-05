@@ -17,5 +17,6 @@ public class Main {
         }
 
         Metrics.exportToCSV(benchmarkResult, "benchmark_results.csv");
+        Metrics.printResultsToConsole(benchmarkResult);
     }
 }

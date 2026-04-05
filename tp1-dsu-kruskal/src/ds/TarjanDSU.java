@@ -19,15 +19,22 @@ public class TarjanDSU implements DisjointSet {
 
     @Override
     public int find(int i) {
-        memoryAccesses++;
-        if (parent[i] != i) {
-            memoryAccesses++;
-            parent[i] = find(parent[i]); 
-            memoryAccesses++;
+        int root = i;
+
+        while (parent[root] != root) {
+            memoryAccesses += 2;
+            root = parent[root];
         }
-        
-        memoryAccesses++;
-        return parent[i];
+
+        while (parent[i] != i) {
+            int next = parent[i];
+            parent[i] = root;
+            memoryAccesses += 3;
+            i = next;
+        }
+
+        memoryAccesses += 2;
+        return root;
     }
 
     @Override
@@ -47,7 +54,7 @@ public class TarjanDSU implements DisjointSet {
                 
                 if (rank[rootI] == rank[rootJ]) {
                     rank[rootJ]++;
-                    memoryAccesses += 2; 
+                    memoryAccesses += 4; 
                 }
             }
             return true;

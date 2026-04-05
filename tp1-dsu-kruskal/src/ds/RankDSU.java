@@ -19,12 +19,13 @@ public class RankDSU implements DisjointSet {
 
     @Override
     public int find(int i) {
-        memoryAccesses++; 
-        if (parent[i] == i) {
-            return i;
+        while (parent[i] != i) {
+            memoryAccesses += 2;
+            i = parent[i];
         }
-        memoryAccesses++; 
-        return find(parent[i]);
+
+        memoryAccesses++;
+        return i;
     }
 
     @Override
@@ -44,7 +45,7 @@ public class RankDSU implements DisjointSet {
                 
                 if (rank[rootI] == rank[rootJ]) {
                     rank[rootJ]++;
-                    memoryAccesses += 2;
+                    memoryAccesses += 4;
                 }
             }
             return true;

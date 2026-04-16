@@ -13,25 +13,20 @@ public class GraphGenerator {
         return ((long) numNodes * (numNodes - 1)) / 2;
     }
 
-    private static int numEdges(long maxEdges, int numNodes, double density) {
-        density = density > 1 ? 1 : density < 0 ? 0 : density;
-
-        long requested = (long) (density * maxEdges);
+    private static int numEdges(int numNodes, int avgDegree) {
+        // Cada aresta se conecta a 2 nós em grafos não direcionados. 
+        // Somatório dos graus = 2 * E. Logo, E = (V * avgDegree) / 2.
+        long requested = ((long) numNodes * avgDegree) / 2;
 
         if (numNodes > 1 && requested < (numNodes - 1)) {
-            requested = numNodes - 1;
+            requested = numNodes - 1; // Garante grafo conexo independente do grau médio.
         }
 
-        // --- MELHORIA 1: Cap de Memória / Out Of Memory Prevention ---
-        // Previne IllegalArgumentException de limites de int e também o OutOfMemory 
-        // limitando o tamanho do Array de Arestas. 15 milhões de objetos 'Edge'
-        // consumem em média 350~500MB de Heap, mantendo-se perfeitamente seguro nas JVM modernas
-        // sem sacrificar o funcionamento dos algoritmos de Kruskal/DSU.
-        final long SAFE_MEMORY_LIMIT = 15_000_000L;
-        if (requested > SAFE_MEMORY_LIMIT) {
-            System.err.println("[AVISO GraphGenerator] Grafo extremamente denso! Reduzindo a solicitação de " 
-                + requested + " arestas para " + SAFE_MEMORY_LIMIT + " por segurança no Heap Limits (OOM).");
-            requested = SAFE_MEMORY_LIMIT;
+        if (requested > Integer.MAX_VALUE - 8) {
+            throw new IllegalArgumentException(
+                "O Limite Físico de Arrays do Java foi estourado! Você solicitou " + requested + 
+                " arestas, mas Arrays no Java suportam no máximo ~2.14 bilhões."
+            );
         }
 
         return (int) requested;
@@ -97,11 +92,10 @@ public class GraphGenerator {
         return edges;
     }
 
-    public static Graph<Integer, Integer> generateGraph(int numNodes, double density) {
+    public static Graph<Integer, Integer> generateGraph(int numNodes, int avgDegree) {
         Node<Integer>[] nodes = generateNodes(numNodes);
 
-        long maxEdges = maxEdges(numNodes);
-        int numEdges = numEdges(maxEdges, numNodes, density);
+        int numEdges = numEdges(numNodes, avgDegree);
 
         Edge<Integer>[] edges = generateEdges(nodes, numEdges);
 

@@ -52,7 +52,7 @@ public class BenchmarkResult {
                 sb.append("Tipo: ").append(entry.getKey()).append("\n");
                 sb.append("Acessos à memória: ").append(subEntry.getValue().getMemoryAccesses()).append("\n");
                 sb.append("Tempo de execução: ").append(subEntry.getValue().getExecutionTime()).append("\n");
-                sb.append("Densidade do grafo: ").append(subEntry.getValue().getGraphDensity()).append("\n");
+                sb.append("Grau Medio: ").append(subEntry.getValue().getGraphAvgDegree()).append("\n");
             }
         }
 

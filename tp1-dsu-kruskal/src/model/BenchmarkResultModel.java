@@ -2,10 +2,10 @@ package model;
 
 public class BenchmarkResultModel {
     private long memoryAccesses;
-    private long executionTime;
+    private double executionTime;
     private double graphDensity;
 
-    public BenchmarkResultModel(long memoryAccesses, long executionTime, double graphDensity) {
+    public BenchmarkResultModel(long memoryAccesses, double executionTime, double graphDensity) {
         this.memoryAccesses = memoryAccesses;
         this.executionTime = executionTime;
         this.graphDensity = graphDensity;
@@ -15,7 +15,7 @@ public class BenchmarkResultModel {
         return this.memoryAccesses;
     }
 
-    public long getExecutionTime() {
+    public double getExecutionTime() {
         return this.executionTime;
     }
 

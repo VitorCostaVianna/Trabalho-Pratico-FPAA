@@ -10,20 +10,31 @@ import utils.GraphGenerator;
 
 public class Benchmark {
     public static void runBenchmarks(BenchmarkResult result, DsTypeEnum ds, int[] graphSizes, double density) {
+        int repetitions = 3;
 
         for(int graphSize : graphSizes) {
             Graph<Integer, Integer> graph = GraphGenerator.generateGraph(graphSize, density);
-            DisjointSet dsu = DSUFactory.getDSU(ds, graphSize);
             
-            long startTime = System.nanoTime();
-            Kruskal.executar(graph, dsu);
-            long endTime = System.nanoTime();
+            long totalExecutionTimeNs = 0;
+            long totalMemoryAccesses = 0;
 
-            long executionTimeMs = (endTime - startTime) / 1000000;
+            for (int i = 0; i < repetitions; i++) {
+                DisjointSet dsu = DSUFactory.getDSU(ds, graphSize);
+                
+                long startTime = System.nanoTime();
+                Kruskal.executar(graph, dsu);
+                long endTime = System.nanoTime();
+                
+                totalExecutionTimeNs += (endTime - startTime);
+                totalMemoryAccesses += dsu.getMemoryAccesses();
+            }
+
+            double avgExecutionTimeMs = (double) totalExecutionTimeNs / repetitions / 1_000_000.0;
+            long avgMemoryAccesses = totalMemoryAccesses / repetitions;
 
             BenchmarkResultModel bmResult = new BenchmarkResultModel(
-                dsu.getMemoryAccesses(),
-                executionTimeMs,
+                avgMemoryAccesses,
+                avgExecutionTimeMs,
                 density
             );
             

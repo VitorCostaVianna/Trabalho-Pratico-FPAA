@@ -9,11 +9,11 @@ import utils.DSUFactory;
 import utils.GraphGenerator;
 
 public class Benchmark {
-    public static void runBenchmarks(BenchmarkResult result, DsTypeEnum ds, int[] graphSizes, int avgDegree) {
+    public static void runBenchmarks(BenchmarkResult result, DsTypeEnum ds, int[] graphSizes) {
         int repetitions = 3;
 
         for(int graphSize : graphSizes) {
-            Graph<Integer, Integer> graph = GraphGenerator.generateGraph(graphSize, avgDegree);
+            Graph<Integer, Integer> graph = GraphGenerator.generateGraph(graphSize);
             
             long totalExecutionTimeNs = 0;
             long totalMemoryAccesses = 0;
@@ -34,8 +34,7 @@ public class Benchmark {
 
             BenchmarkResultModel bmResult = new BenchmarkResultModel(
                 avgMemoryAccesses,
-                avgExecutionTimeMs,
-                avgDegree
+                avgExecutionTimeMs
             );
             
             result.addResult(ds, graphSize, bmResult);

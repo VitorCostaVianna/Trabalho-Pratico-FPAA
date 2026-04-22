@@ -14,7 +14,7 @@ public class Metrics {
 
     public static void exportToCSV(BenchmarkResult benchmarkResult, String filename) {
         try (FileWriter writer = new FileWriter(filename)) {
-            writer.append("DSU_Type,Graph_Size,Graph_Avg_Degree,Avg_Time_ms,Avg_Memory_Accesses\n");
+            writer.append("DSU_Type,Graph_Size,Avg_Time_ms,Avg_Memory_Accesses\n");
             
             Map<DsTypeEnum, LinkedHashMap<Integer, BenchmarkResultModel>> resultsMap = benchmarkResult.getResult();
 
@@ -28,7 +28,6 @@ public class Metrics {
 
                     writer.append(type.name()).append(",")
                           .append(String.valueOf(graphSize)).append(",")
-                          .append(String.valueOf(resultModel.getGraphAvgDegree())).append(",")
                           .append(avgExecutionTimeFormatted).append(",")
                           .append(String.valueOf(resultModel.getMemoryAccesses())).append("\n");
                 }
@@ -39,10 +38,10 @@ public class Metrics {
     }
 
     public static void printResultsToConsole(BenchmarkResult benchmarkResult) {
-        System.out.println("\n=============================================================================================");
-        System.out.printf("%-15s | %-12s | %-15s | %-15s | %-20s\n", 
-            "Tipo de DSU", "N (Nós)", "Grau Médio", "Tempo Médio (ms)", "Acessos Médios Mem.");
-        System.out.println("---------------------------------------------------------------------------------------------");
+        System.out.println("\n=================================================================================");
+        System.out.printf("%-15s | %-12s | %-15s | %-20s\n",
+            "Tipo de DSU", "N (Nós)", "Tempo Médio (ms)", "Acessos Médios Mem.");
+        System.out.println("---------------------------------------------------------------------------------");
 
         Map<DsTypeEnum, LinkedHashMap<Integer, BenchmarkResultModel>> resultsMap = benchmarkResult.getResult();
 
@@ -54,14 +53,13 @@ public class Metrics {
                 BenchmarkResultModel resultModel = subEntry.getValue();
                 String avgExecutionTimeFormatted = String.format(Locale.US, "%.5f", resultModel.getExecutionTime());
 
-                System.out.printf("%-15s | %-12d | %-15d | %-15s | %-20d\n", 
-                    type.name(), 
-                    graphSize, 
-                    resultModel.getGraphAvgDegree(), 
-                    avgExecutionTimeFormatted, 
+                System.out.printf("%-15s | %-12d | %-15s | %-20d\n",
+                    type.name(),
+                    graphSize,
+                    avgExecutionTimeFormatted,
                     resultModel.getMemoryAccesses());
             }
         }
-        System.out.println("=============================================================================================\n");
+        System.out.println("=================================================================================\n");
     }
 }

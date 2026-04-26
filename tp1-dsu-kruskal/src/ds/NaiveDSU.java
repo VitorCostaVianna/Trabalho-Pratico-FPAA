@@ -2,10 +2,20 @@ package ds;
 
 import interfaces.DisjointSet;
 
+/**
+ * DSU simples (naive) sem otimizações.
+ * O {@code find} percorre a cadeia de pais iterativamente sem compressão de caminho.
+ * O {@code union} sempre anexa a raiz de {@code i} como filho da raiz de {@code j}.
+ */
 public class NaiveDSU implements DisjointSet {
     private int[] parent;
     private long memoryAccesses;
 
+    /**
+     * Inicializa a estrutura com {@code numNodes} elementos, cada um em seu próprio conjunto.
+     *
+     * @param numNodes número de elementos
+     */
     public NaiveDSU(int numNodes) {
         parent = new int[numNodes];
         memoryAccesses = 0;

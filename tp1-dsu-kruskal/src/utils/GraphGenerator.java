@@ -6,18 +6,38 @@ import model.Edge;
 import model.Graph;
 import model.Node;
 
+/** Gera grafos aleatórios conexos para uso nos benchmarks. */
 public class GraphGenerator {
     private static final Random random = new Random();
-    
+
+    /**
+     * Calcula o número máximo de arestas para um grafo simples com {@code numNodes} nós.
+     *
+     * @param numNodes número de nós
+     * @return número máximo de arestas = n*(n-1)/2
+     */
     private static long maxEdges(int numNodes) {
         return ((long) numNodes * (numNodes - 1)) / 2;
     }
 
+    /**
+     * Determina o número de arestas a gerar: {@code min(3*numNodes, maxEdges)}.
+     *
+     * @param maxEdges limite máximo de arestas para o grafo
+     * @param numNodes número de nós
+     * @return número de arestas a gerar
+     */
     private static int numEdges(long maxEdges, int numNodes) {
         long numEdges = numNodes * 3;
         return (int) Math.min(numEdges, maxEdges);
     }
 
+    /**
+     * Gera um array de {@code numNodes} nós com id e valor iguais ao índice.
+     *
+     * @param numNodes número de nós
+     * @return array de nós
+     */
     @SuppressWarnings("unchecked")
     private static Node<Integer>[] generateNodes(int numNodes){
         Node<Integer>[] nodes = new Node[numNodes];
@@ -27,6 +47,15 @@ public class GraphGenerator {
         return nodes;
     }
 
+    /**
+     * Gera um array de arestas aleatórias garantindo conectividade do grafo.
+     * As primeiras {@code n-1} arestas formam um caminho linear (garantia de conexidade);
+     * as demais são geradas aleatoriamente entre pares distintos de nós.
+     *
+     * @param nodes    array de nós do grafo
+     * @param numEdges número total de arestas a gerar
+     * @return array de arestas com pesos aleatórios entre 1 e 100
+     */
     @SuppressWarnings("unchecked")
     private static Edge<Integer>[] generateEdges(Node<Integer>[] nodes, int numEdges) {
         Edge<Integer>[] edges = (Edge<Integer>[]) new Edge[numEdges];
@@ -55,6 +84,12 @@ public class GraphGenerator {
         return edges;
     }
 
+    /**
+     * Gera um grafo conexo aleatório com {@code numNodes} nós e aproximadamente {@code 3*numNodes} arestas.
+     *
+     * @param numNodes número de nós do grafo
+     * @return grafo gerado
+     */
     public static Graph<Integer, Integer> generateGraph(int numNodes) {
         Node<Integer>[] nodes = generateNodes(numNodes);
 

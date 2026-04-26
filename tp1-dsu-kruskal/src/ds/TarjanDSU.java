@@ -2,11 +2,22 @@ package ds;
 
 import interfaces.DisjointSet;
 
+/**
+ * DSU com union by rank e compressão de caminho (path compression) de Tarjan.
+ * O {@code find} realiza dois passes: primeiro localiza a raiz, depois redireciona
+ * todos os nós do caminho diretamente para ela, achatando a árvore.
+ */
 public class TarjanDSU implements DisjointSet {
     private int[] parent;
     private int[] rank;
     private long memoryAccesses;
 
+    /**
+     * Inicializa a estrutura com {@code numNodes} elementos, cada um em seu próprio conjunto
+     * com rank inicial 0.
+     *
+     * @param numNodes número de elementos
+     */
     public TarjanDSU(int numNodes) {
         parent = new int[numNodes];
         rank = new int[numNodes];

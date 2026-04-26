@@ -2,11 +2,22 @@ package ds;
 
 import interfaces.DisjointSet;
 
+/**
+ * DSU com otimização por rank (union by rank).
+ * No {@code union}, a árvore de menor rank é anexada à de maior rank,
+ * mantendo as árvores balanceadas sem compressão de caminho no {@code find}.
+ */
 public class RankDSU implements DisjointSet {
     private int[] parent;
     private int[] rank;
     private long memoryAccesses;
 
+    /**
+     * Inicializa a estrutura com {@code numNodes} elementos, cada um em seu próprio conjunto
+     * com rank inicial 0.
+     *
+     * @param numNodes número de elementos
+     */
     public RankDSU(int numNodes) {
         parent = new int[numNodes];
         rank = new int[numNodes];

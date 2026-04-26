@@ -10,8 +10,16 @@ import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 
+/** Utilitário para exportar e exibir os resultados de benchmark. */
 public class Metrics {
 
+    /**
+     * Exporta os resultados de benchmark para um arquivo CSV com colunas:
+     * {@code DSU_Type, Graph_Size, Avg_Time_ms, Avg_Memory_Accesses}.
+     *
+     * @param benchmarkResult resultados a exportar
+     * @param filename        caminho do arquivo CSV de saída
+     */
     public static void exportToCSV(BenchmarkResult benchmarkResult, String filename) {
         try (FileWriter writer = new FileWriter(filename)) {
             writer.append("DSU_Type,Graph_Size,Avg_Time_ms,Avg_Memory_Accesses\n");
@@ -37,6 +45,11 @@ public class Metrics {
         }
     }
 
+    /**
+     * Imprime uma tabela formatada com os resultados de benchmark no console.
+     *
+     * @param benchmarkResult resultados a exibir
+     */
     public static void printResultsToConsole(BenchmarkResult benchmarkResult) {
         System.out.println("\n=================================================================================");
         System.out.printf("%-15s | %-12s | %-15s | %-20s\n",
